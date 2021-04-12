@@ -5,7 +5,7 @@ import message.Messages;
 
 import java.io.Serializable;
 
-public enum FileResponse implements Serializable {
+public enum  FileResponse implements Serializable {
     AllowAccessAlreadyCreated {
         @Override
         public void getMessageOfResponse() {
