@@ -1,20 +1,11 @@
 package collection;
 
-import collection.CollectionManager;
-import commands.*;
-import commands.serializable_commands.SerializableCommandStandard;
-import commands.serializable_commands.SerializableCommandWithArgs;
-import commands.serializable_commands.SerializableCommandWithObject;
-import commands.serializable_commands.SerializableCommandWithObjectAndArgs;
 import fields.Flat;
 import message.MessageColor;
-import message.Messages;
 import server.Connection;
 import utils.*;
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Receiver {
     private final Connection connection;

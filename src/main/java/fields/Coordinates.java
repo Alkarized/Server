@@ -1,9 +1,13 @@
 package fields;
 
+import java.io.Serializable;
+
 /**
  * Класс для координат
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
+    private static final long serialVersionUID = 12245;
+
     private Integer x; //Поле не может быть null
     private Float y; //Максимальное значение поля: 687, Поле не может быть null
 

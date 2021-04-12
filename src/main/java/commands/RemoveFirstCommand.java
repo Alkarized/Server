@@ -1,7 +1,7 @@
 package commands;
 
-import fields.Flat;
 import collection.Receiver;
+import fields.Flat;
 import message.MessageColor;
 import utils.SerializableAnswerToClient;
 

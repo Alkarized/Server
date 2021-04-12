@@ -1,12 +1,21 @@
 package fields;
 
+
+
+import message.MessageColor;
+import message.Messages;
+
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import fields.*;
 
 /**
  * Класс аппартаментов
  */
-public class Flat implements Comparable<Flat>{
+public class Flat implements Comparable<Flat>, Serializable {
+    private static final long serialVersionUID = 12334;
+
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -150,7 +159,7 @@ public class Flat implements Comparable<Flat>{
      * Выводит информацию в строков виде об объекте
      */
     public String printInfoAboutElement() {
-        return "id - " + id + "\n" +
+        return  "id - " + id + "\n" +
                 "Имя - " + name + "\n" +
                 "Координаты x и y - " + coordinates.getX() + ", " + coordinates.getY() + "\n" +
                 "Дата создания - " + getCreationDate() + "\n" +

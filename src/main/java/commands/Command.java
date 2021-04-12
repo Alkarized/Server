@@ -1,7 +1,7 @@
 package commands;
 
-import fields.Flat;
 import collection.Receiver;
+import fields.Flat;
 import utils.SerializableAnswerToClient;
 
 import java.io.Serializable;
