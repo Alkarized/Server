@@ -149,7 +149,6 @@ public class Connection {
 
         }
 
-
     }
 
     public void endConnection() {
