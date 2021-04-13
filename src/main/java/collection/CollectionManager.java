@@ -4,7 +4,7 @@ import collection.comparators.CoordinatesComparator;
 import collection.comparators.NameComparator;
 import collection.comparators.NumberOfRoomsComparator;
 import fields.Flat;
-import message.MessageColor;
+import message.*;
 import utils.SerializableAnswerToClient;
 
 import java.io.File;

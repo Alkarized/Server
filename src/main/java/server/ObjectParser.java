@@ -5,6 +5,8 @@ import commands.serializable_commands.SerializableCommandStandard;
 import commands.serializable_commands.SerializableCommandWithArgs;
 import commands.serializable_commands.SerializableCommandWithObject;
 import commands.serializable_commands.SerializableCommandWithObjectAndArgs;
+import message.MessageColor;
+import message.Messages;
 import utils.SerializableAnswerToClient;
 
 import java.io.ByteArrayOutputStream;
@@ -40,7 +42,7 @@ public class ObjectParser {
             objectOutputStream.writeObject(serializableAnswerToClient);
             byteBuffer.put(byteArrayOutputStream.toByteArray());
         } catch (IOException e) {
-            e.printStackTrace();
+            Messages.normalMessageOutput(e.toString(), MessageColor.ANSI_RED);
         }
         return byteBuffer;
     }

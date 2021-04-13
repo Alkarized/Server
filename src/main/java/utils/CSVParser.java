@@ -1,6 +1,9 @@
 package utils;
 
 import fields.*;
+import message.MessageColor;
+import message.Messages;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +92,7 @@ public class CSVParser {
                     return null;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Messages.normalMessageOutput(e.toString(), MessageColor.ANSI_RED);
                 return null;
             }
         } else {

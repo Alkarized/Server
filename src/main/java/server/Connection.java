@@ -1,6 +1,8 @@
 package server;
 
 import collection.Receiver;
+import message.MessageColor;
+import message.Messages;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,7 +32,7 @@ public class Connection {
             connectServer();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Messages.normalMessageOutput(e.toString(), MessageColor.ANSI_RED);
         }
 
         while (true) {
@@ -53,6 +55,7 @@ public class Connection {
 
                     if (selectedKey.isReadable()) {
                         Object object = readObjectFromClient(selectedKey);
+                        Messages.normalMessageOutput("Read info from client", MessageColor.ANSI_CYAN);
                         selectedKey.attach(new ObjectParser().parseObjectToByteBuffer(object, receiver));
                         selectedKey.interestOps(SelectionKey.OP_WRITE);
                     }
@@ -75,8 +78,10 @@ public class Connection {
             serverSocketChannel.configureBlocking(false);
             serverSocketChannel.bind(inetSocketAddress);
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+            Messages.normalMessageOutput("Start and open server", MessageColor.ANSI_GREEN);
         } catch (IOException e) {
-            e.printStackTrace();
+            Messages.normalMessageOutput(e.toString(), MessageColor.ANSI_RED);
+
         }
     }
 
@@ -87,12 +92,12 @@ public class Connection {
 
             client.configureBlocking(false);
             client.register(selector, SelectionKey.OP_READ);
-        } catch (ClosedChannelException e) {
-            e.printStackTrace();
+            Messages.normalMessageOutput("Accept new Client" + client.getRemoteAddress(), MessageColor.ANSI_BLUE);
         } catch (IOException e) {
-            e.printStackTrace();
+            Messages.normalMessageOutput(e.toString(), MessageColor.ANSI_RED);
+
         }
-        System.out.println("Connected");
+        Messages.normalMessageOutput("Connected", MessageColor.ANSI_GREEN);
     }
 
     private Object readObjectFromClient(SelectionKey selectionKey) {
@@ -116,12 +121,10 @@ public class Connection {
             try {
                 ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(outBuffer.array()));
                 return objectInputStream.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (IOException | ClassNotFoundException ignored) {
             }
         }
+
         return null;
     }
 
@@ -138,13 +141,13 @@ public class Connection {
                 try {
                     socketChannel.close();
                 } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    Messages.normalMessageOutput(ioException.toString(), MessageColor.ANSI_RED);
                 }
             }
         }
         try {
             selectionKey.interestOps(SelectionKey.OP_READ);
-            System.out.println("written");
+            Messages.normalMessageOutput("Written answer for client", MessageColor.ANSI_GREEN);
         } catch (CancelledKeyException ignored) {
 
         }
@@ -156,8 +159,9 @@ public class Connection {
             serverSocketChannel.close();
             selector.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Messages.normalMessageOutput(e.toString(), MessageColor.ANSI_RED);
         }
+
 
     }
 

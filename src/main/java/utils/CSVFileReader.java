@@ -1,5 +1,8 @@
 package utils;
 
+import message.MessageColor;
+import message.Messages;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,9 +22,9 @@ public class CSVFileReader {
         if (args.length == 1) {
             fileName = args[0] + setFormat(checkFormat(args[0]));
             checkAllPermissions(new File(fileName));
-            //Messages.normalMessageOutput("Полученный файл - " + fileName);
+            Messages.normalMessageOutput("Полученный файл - " + fileName, MessageColor.ANSI_CYAN);
         } else {
-            //Messages.normalMessageOutput("Неправильный ввод, что-то не так с аргументами при запуске программы, попробуйте еще раз");
+            Messages.normalMessageOutput("Неправильный ввод, что-то не так с аргументами при запуске программы, попробуйте еще раз", MessageColor.ANSI_RED);
             System.exit(1);
         }
         return fileName;
@@ -49,13 +52,13 @@ public class CSVFileReader {
     private void checkAllPermissions(File file) {
         if (file.exists()) {
             if ((!file.canWrite()) && (!file.canRead())) {
-                //Messages.normalMessageOutput("Файл нельзя считать и что-то в него записать, давай исправляй, сударь!");
+                Messages.normalMessageOutput("Файл нельзя считать и что-то в него записать, давай исправляй, сударь!", MessageColor.ANSI_RED);
                 System.exit(1);
             } else if ((!file.canWrite()) && file.canRead()) {
-                //Messages.normalMessageOutput("Уууупс, а в файлик-то ничего записать нельзя, а смысл в чем? Зайкрой и открой нормально");
+                Messages.normalMessageOutput("Уууупс, а в файлик-то ничего записать нельзя, а смысл в чем? Зайкрой и открой нормально", MessageColor.ANSI_RED);
                 System.exit(1);
             } else if (file.canWrite() && (!file.canRead())) {
-                //Messages.normalMessageOutput("Ну что-то явно пошло не так, дай права на чтение пощупать.");
+                Messages.normalMessageOutput("Ну что-то явно пошло не так, дай права на чтение пощупать.", MessageColor.ANSI_RED);
                 System.exit(1);
             }
         }
@@ -83,11 +86,11 @@ public class CSVFileReader {
             return new ArrayList<>(Arrays.asList(lines));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            //Messages.normalMessageOutput("Файл не был найден, возможно он еще не существует, не беда");
+            Messages.normalMessageOutput("Файл не был найден, возможно он еще не существует, не беда", MessageColor.ANSI_YELLOW);
             return null;
         } catch (IOException e) {
             e.printStackTrace();
-            //Messages.normalMessageOutput("Какая-то ошибка с IO, выключаемся");
+            Messages.normalMessageOutput("Какая-то ошибка с IO, выключаемся", MessageColor.ANSI_RED);
             System.exit(1);
             return null;
         }

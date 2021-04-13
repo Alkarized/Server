@@ -3,6 +3,8 @@ package utils;
 import collection.CollectionManager;
 import collection.Receiver;
 import fields.Flat;
+import message.MessageColor;
+import message.Messages;
 import server.Connection;
 
 import java.util.ArrayList;
@@ -28,20 +30,20 @@ public class ProgramStarter {
         CSVFileReader csvFileReader = new CSVFileReader();
         ArrayList<String> listOfLines;
         if ((listOfLines = csvFileReader.readAllLines(collectionManager.getFile())) != null) {
-            for (String listOfLine : listOfLines) {
+            for (int i = 0; i < listOfLines.size(); i++) {
                 Flat flat;
-                String[] args = csvParser.parseLineToArray(listOfLine);
+                String[] args = csvParser.parseLineToArray(listOfLines.get(i));
                 if (args != null) {
                     if ((flat = csvParser.parseArrayToFlat(args)) != null) {
                         collectionManager.getCollection().add(flat);
                     } else {
-                        //Messages.normalMessageOutput("Программа не смогла считать " + i + " строку, ошибка в формате самих полей, пропускам ее.");
+                        Messages.normalMessageOutput("Программа не смогла считать " + i + " строку, ошибка в формате самих полей, пропускам ее.", MessageColor.ANSI_RED);
                     }
                 } else {
-                    //Messages.normalMessageOutput("Ошибка в строке " + i + ", неправильно составлена CSV таблица, что-то не так с кавычками, пропуск строки");
+                    Messages.normalMessageOutput("Ошибка в строке " + i + ", неправильно составлена CSV таблица, что-то не так с кавычками, пропуск строки", MessageColor.ANSI_RED);
                 }
             }
-            //Messages.normalMessageOutput("Запись данных из файла закончилась");
+            Messages.normalMessageOutput("Запись данных из файла закончилась", MessageColor.ANSI_CYAN);
         }
 
     }
