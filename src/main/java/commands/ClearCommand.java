@@ -18,6 +18,7 @@ public class ClearCommand extends Command implements Serializable {
         try {
             return receiver.clear();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

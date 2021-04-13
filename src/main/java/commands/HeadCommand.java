@@ -16,6 +16,7 @@ public class HeadCommand extends Command implements Serializable {
         try {
             return receiver.getHead();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

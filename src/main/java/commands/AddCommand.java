@@ -16,6 +16,7 @@ public class AddCommand extends Command implements Serializable {
         try {
             return receiver.addElement(flat);
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

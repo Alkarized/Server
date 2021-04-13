@@ -16,6 +16,7 @@ public class PrintFieldNumberOfRoomsCommand extends Command implements Serializa
         try {
             return receiver.printFieldDescendingNumberOfRooms();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

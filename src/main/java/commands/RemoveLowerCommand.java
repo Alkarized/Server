@@ -16,6 +16,7 @@ public class RemoveLowerCommand extends Command implements Serializable {
         try {
             return receiver.removeLowerElements(flat);
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

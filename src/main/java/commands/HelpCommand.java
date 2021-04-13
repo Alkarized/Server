@@ -17,6 +17,7 @@ public class HelpCommand extends Command implements Serializable {
         try {
             return receiver.getInfoAboutAllCommands();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

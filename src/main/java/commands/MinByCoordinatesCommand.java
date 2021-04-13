@@ -16,6 +16,7 @@ public class MinByCoordinatesCommand extends Command implements Serializable {
         try {
             return receiver.printElementWithMinCoordinates();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

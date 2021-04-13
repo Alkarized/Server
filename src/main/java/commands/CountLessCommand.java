@@ -16,6 +16,7 @@ public class CountLessCommand extends Command implements Serializable {
         try {
             return receiver.countLessNumberOfRooms(args);
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

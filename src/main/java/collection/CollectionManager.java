@@ -48,7 +48,7 @@ public class CollectionManager {
             getCollection().clear();
             return "Коллекция успешно очищена! ";
         } else {
-            return "Коллекция пуста! ";
+            return "Коллекция пуста!1 ";
         }
     }
 
@@ -64,7 +64,7 @@ public class CollectionManager {
         if (getCollection().size() > 0) {
             return Objects.requireNonNull(getCollection().peek()).printInfoAboutElement();
         } else {
-            return "Коллекция пуста! ";
+            return "Коллекция пуста!2 ";
         }
     }
 
@@ -90,7 +90,7 @@ public class CollectionManager {
             PriorityQueue<Flat> queue = sortCollectionByComp(new CoordinatesComparator());
             return Objects.requireNonNull(queue.peek()).printInfoAboutElement();
         } else {
-            return "Коллекция пуста! ";
+            return "Коллекция пуста!3 ";
         }
     }
 
@@ -102,7 +102,7 @@ public class CollectionManager {
             queue.forEach((flat -> stringBuilder.append(flat.getNumberOfRooms())));
             return ("Значения поля numberOfRooms всех элементов в порядке убывания:\n " + stringBuilder.toString() + " ");
         } else {
-            return "Коллекция пуста! ";
+            return "Коллекция пуста!4 ";
         }
     }
 
@@ -116,7 +116,7 @@ public class CollectionManager {
                 return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Элемент с данным ID отсутствует в коллекции! ");
             }
         } else {
-            return new SerializableAnswerToClient(MessageColor.ANSI_YELLOW, "Коллекция пуста! ");
+            return new SerializableAnswerToClient(MessageColor.ANSI_YELLOW, "Коллекция пуста!5 ");
         }
     }
 
@@ -160,6 +160,7 @@ public class CollectionManager {
             try {
                 flat.setCreationDate(new SimpleDateFormat("HH:mm:ss.SSS dd-MM-yyyy").parse(getCollection().poll().getCreationDate()));
             } catch (ParseException e) {
+                e.printStackTrace();
                 //Messages.normalMessageOutput("Какая-то проблема с датой ?");
                 return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Какая-то проблема с датой");
             }
@@ -189,6 +190,7 @@ public class CollectionManager {
                         }
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Что-то пошло не так... " + e.toString());
                 }
             } else {

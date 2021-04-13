@@ -16,6 +16,7 @@ public class UpdateByIdCommand extends Command implements Serializable {
         try {
             return receiver.updateElementById(flat, args);
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

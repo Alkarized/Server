@@ -17,6 +17,7 @@ public class RemoveByIdCommand extends Command implements Serializable {
         try {
             return receiver.removeById(args);
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return new SerializableAnswerToClient(MessageColor.ANSI_RED, "Ошибка соединения");
         }
     }

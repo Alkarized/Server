@@ -64,7 +64,7 @@ public class Connection {
                 }
 
             } catch (IOException e) {
-
+                e.printStackTrace();
             }
         }
 
@@ -102,7 +102,7 @@ public class Connection {
                 ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(outBuffer.array()));
                 return objectInputStream.readObject();
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
 
         }
