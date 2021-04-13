@@ -28,6 +28,7 @@ public class ObjectParser {
             SerializableCommandStandard command = (SerializableCommandStandard)object;
             serializableAnswerToClient = command.getCommand().execute(receiver, null, null);
         }
+        receiver.save();
         return parseAnswerToByteBuffer(serializableAnswerToClient);
     }
 

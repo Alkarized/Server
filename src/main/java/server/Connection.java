@@ -5,12 +5,10 @@ import collection.Receiver;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -24,11 +22,11 @@ public class Connection {
         this.inetSocketAddress = new InetSocketAddress(port);
     }
 
-    public void setReceiver(Receiver receiver){
+    public void setReceiver(Receiver receiver) {
         this.receiver = receiver;
     }
 
-    public void start(){
+    public void start() {
         try {
             connectServer();
 
@@ -65,7 +63,7 @@ public class Connection {
 
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            } catch (CancelledKeyException ignored){}
         }
 
 
@@ -93,18 +91,23 @@ public class Connection {
         SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(2048);
         ByteBuffer outBuffer = ByteBuffer.allocate(2048);
-
-        while (socketChannel.read(byteBuffer) >= 0 || byteBuffer.position() > 0) {
-            byteBuffer.flip();
-            outBuffer.put(byteBuffer);
-            byteBuffer.compact();
-            try {
-                ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(outBuffer.array()));
-                return objectInputStream.readObject();
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            while (socketChannel.read(byteBuffer) >= 0 || byteBuffer.position() > 0) {
+                byteBuffer.flip();
+                outBuffer.put(byteBuffer);
+                byteBuffer.compact();
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(outBuffer.array()));
+                    return objectInputStream.readObject();
+                } catch (StreamCorruptedException ignored) {
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-
+        } catch (IOException e) {
+            if (e.getMessage().equals("An established connection was aborted by the software in your host machine")) {
+                socketChannel.close();
+            }
         }
         return null;
     }
@@ -119,7 +122,7 @@ public class Connection {
         selectionKey.interestOps(SelectionKey.OP_READ);
     }
 
-    public void endConnection(){
+    public void endConnection() {
         try {
             serverSocketChannel.close();
             selector.close();

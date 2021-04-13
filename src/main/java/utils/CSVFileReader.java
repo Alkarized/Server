@@ -79,6 +79,7 @@ public class CSVFileReader {
                 }
             }
             String[] lines = String.valueOf(line).split(System.getProperty("line.separator"));
+            file.createNewFile();
             return new ArrayList<>(Arrays.asList(lines));
         } catch (FileNotFoundException e) {
             e.printStackTrace();

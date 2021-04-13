@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class UpdateByIdCommand extends Command implements Serializable {
-    private static final long serialVersionUID = 64;
+    private static final long serialVersionUID = 63;
 
     @Override
     public SerializableAnswerToClient execute(Receiver receiver, Flat flat, String[] args) {

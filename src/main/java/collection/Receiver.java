@@ -5,7 +5,10 @@ import message.MessageColor;
 import server.Connection;
 import utils.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.stream.Collectors;
 
 public class Receiver {
     private final Connection connection;
@@ -84,5 +87,17 @@ public class Receiver {
 
     public SerializableAnswerToClient removeLowerElements(Flat flat) throws IOException, ClassNotFoundException {
         return collectionManager.removeLower(flat);
+    }
+
+    public void save(){
+        CSVParser csvParser = new CSVParser();
+        try {
+            PrintWriter printWriter = new PrintWriter(collectionManager.getFile());
+            collectionManager.getCollection().forEach(flat -> printWriter.println(csvParser.makeCSVLineFromFlat(flat)));
+            printWriter.flush();
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
